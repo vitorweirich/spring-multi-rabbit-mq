@@ -1,0 +1,38 @@
+server:
+  port: ${SERVER_PORT:8082}
+
+spring:
+  jackson:
+    time-zone: America/Sao_Paulo
+  application:
+    name: test
+  rabbitmq:
+    custom:
+      shared:
+        host: ${RABBIT_HOST:localhost}
+        port: ${RABBIT_PORT:5672}
+        username: ${RABBIT_USERNAME:guest}
+        password: ${RABBIT_PASSWORD:guest}
+        ttlRetryMessage: ${RABBIT_TTL_RETRY_MESSAGE:60000}
+        maxRetriesAttempts: 4
+        autoCreate: true
+        ttlMultiply: 2
+        concurrentConsumers: 3
+        maxConcurrentConsumers: 4
+        exchangeType: topic
+        enableLogs: ${RABBIT_ENABLE_LOGS:false}
+        useQueueNameAsRetryRoutingKey: false
+      event1:
+        queueRoutingKey: queue1
+        exchange: events
+        queue: queue1
+        queueDlq: queue1.dead
+      event2:
+        host: ${RABBIT_HOST:localhost}
+        port: ${RABBIT_PORT:5673}
+        username: ${RABBIT_USERNAME:guest}
+        password: ${RABBIT_PASSWORD:guest}
+        queueRoutingKey: queue2
+        exchange: events
+        queue: queue2
+        queueDlq: queue2.dead
